@@ -153,20 +153,28 @@ func TestLastNanosecondOfTheMonth(t *testing.T) {
 	}
 }
 
-func TestFirstOfLastMonth(t *testing.T) {
+func TestFirstOfPriorMonth(t *testing.T) {
 	type args struct {
 		t time.Time
 	}
+
+	i1 := time.Date(2018, time.September, 23, 0, 0, 0, 0, time.Local)
+	o1 := time.Date(2018, time.August, 1, 0, 0, 0, 0, time.Local)
+
+	i2 := time.Date(2017, time.January, 23, 0, 0, 0, 0, time.UTC)
+	o2 := time.Date(2016, time.December, 1, 0, 0, 0, 0, time.UTC)
+
 	tests := []struct {
 		name string
 		args args
 		want time.Time
 	}{
-		// TODO: Add test cases.
+		{name: "Local Positive Test", args: args{i1}, want: o1},
+		{name: "UTC Positive Test", args: args{i2}, want: o2},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := FirstOfLastMonth(tt.args.t); !reflect.DeepEqual(got, tt.want) {
+			if got := FirstOfPriorMonth(tt.args.t); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("FirstOfLastMonth() = %v, want %v", got, tt.want)
 			}
 		})

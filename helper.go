@@ -45,15 +45,17 @@ func FirstOfTheMonth(t time.Time) time.Time {
 	return zh
 }
 
-// FirstOfLastMonth gives the first nanosecond of the previous month of
+// FirstOfPriorMonth gives the first nanosecond of the prior month of
 // whatever day you pass in for the given input Time in that Location's time zone.
 // Pass a time.Time using UTC if you want to get back the time in UTC
-func FirstOfLastMonth(t time.Time) time.Time {
+func FirstOfPriorMonth(t time.Time) time.Time {
 
 	year, month, _ := t.Date()
 	if month == 1 {
 		year--
 		month = 12
+	} else {
+		month--
 	}
 	zh := time.Date(year, month, 1, 0, 0, 0, 0, t.Location())
 
