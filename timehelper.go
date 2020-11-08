@@ -72,3 +72,13 @@ func LastNanosecondOfTheMonth(t time.Time) time.Time {
 
 	return nm
 }
+
+// MTD (Month To Date) returns the start of the month
+// and the start of the next day for the given time input
+// to enable range selections using >= and <
+func MTD(t time.Time) (time.Time, time.Time) {
+	fom := FirstOfTheMonth(t)
+	nd := ZeroHour(t.Add(time.Hour * 24))
+
+	return fom, nd
+}
