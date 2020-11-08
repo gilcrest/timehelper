@@ -1,6 +1,8 @@
 package timehelper
 
-import "time"
+import (
+	"time"
+)
 
 // LastNanosecondNextYear gives the last nanosecond of the next year
 // for the given input Time in that Location's time zone. Pass a
@@ -73,12 +75,45 @@ func LastNanosecondOfTheMonth(t time.Time) time.Time {
 	return nm
 }
 
-// MTD (Month To Date) returns the start of the month
-// and the start of the next day for the given time input
-// to enable range selections using >= and <
-func MTD(t time.Time) (time.Time, time.Time) {
-	fom := FirstOfTheMonth(t)
-	nd := ZeroHour(t.Add(time.Hour * 24))
+// FirstOfTheQuarter returns the first nanosecond of the quarter
+// of the time passed in
+func FirstOfTheQuarter(t time.Time) time.Time {
 
-	return fom, nd
+	year, month, _ := t.Date()
+
+	var quarter int
+	switch month {
+	case 1, 2, 3:
+		quarter = 1
+	case 4, 5, 6:
+		quarter = 2
+	case 7, 8, 9:
+		quarter = 3
+	case 10, 11, 12:
+		quarter = 4
+	}
+
+	var foq time.Time
+	switch quarter {
+	case 1:
+		foq = time.Date(year, 1, 1, 0, 0, 0, 0, t.Location())
+	case 2:
+		foq = time.Date(year, 4, 1, 0, 0, 0, 0, t.Location())
+	case 3:
+		foq = time.Date(year, 7, 1, 0, 0, 0, 0, t.Location())
+	case 4:
+		foq = time.Date(year, 10, 1, 0, 0, 0, 0, t.Location())
+	}
+
+	return foq
+}
+
+// FirstOfTheYear returns the first nanosecond of the year
+// of the time passed in
+func FirstOfTheYear(t time.Time) time.Time {
+
+	year, _, _ := t.Date()
+	zh := time.Date(year, 1, 1, 0, 0, 0, 0, t.Location())
+
+	return zh
 }

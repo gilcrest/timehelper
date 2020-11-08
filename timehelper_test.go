@@ -5,6 +5,8 @@ import (
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestLastNanosecondNextYear(t *testing.T) {
@@ -179,4 +181,40 @@ func TestFirstOfPriorMonth(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestFirstOfTheQuarter(t *testing.T) {
+
+	q1 := time.Date(2020, time.February, 29, 0, 0, 0, 0, time.Local)
+	o1 := time.Date(2020, time.January, 1, 0, 0, 0, 0, time.Local)
+
+	f := FirstOfTheQuarter(q1)
+	require.Equal(t, o1, f)
+
+	q2 := time.Date(2020, time.May, 29, 0, 0, 0, 0, time.Local)
+	o2 := time.Date(2020, time.April, 1, 0, 0, 0, 0, time.Local)
+
+	f2 := FirstOfTheQuarter(q2)
+	require.Equal(t, o2, f2)
+
+	q3 := time.Date(2020, time.August, 29, 0, 0, 0, 0, time.Local)
+	o3 := time.Date(2020, time.July, 1, 0, 0, 0, 0, time.Local)
+
+	f3 := FirstOfTheQuarter(q3)
+	require.Equal(t, o3, f3)
+
+	q4 := time.Date(2020, time.November, 29, 0, 0, 0, 0, time.Local)
+	o4 := time.Date(2020, time.October, 1, 0, 0, 0, 0, time.Local)
+
+	f4 := FirstOfTheQuarter(q4)
+	require.Equal(t, o4, f4)
+}
+
+func TestYTD(t *testing.T) {
+
+	i1 := time.Date(2020, time.July, 4, 0, 0, 0, 0, time.Local)
+	o1 := time.Date(2020, time.January, 1, 0, 0, 0, 0, time.Local)
+
+	f := FirstOfTheYear(i1)
+	require.Equal(t, o1, f)
 }
